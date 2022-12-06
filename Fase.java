@@ -5,7 +5,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
 //import java.awt.event.ActionListener.actionPerformed;
-import java.awt.event.*;  
+import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.*;
 
 public class Fase extends JPanel implements ActionListener{
@@ -13,6 +16,7 @@ public class Fase extends JPanel implements ActionListener{
     private Image chao;
     private Ninja ninja;
     private Timer timer;
+    private List<Adaga> adaga;
 
     public Fase(){
         setFocusable(true);
@@ -26,17 +30,43 @@ public class Fase extends JPanel implements ActionListener{
         addKeyListener(new TecladoAdapter());
         timer = new Timer(5,this);
         timer.start();
+        inicializaAdagas();
     }
+
+    public void inicializaAdagas(){
+        int cordenadas [] = new int [40];
+        adaga = new ArrayList<Adaga>();
+
+        for(int i = 0; i<cordenadas.length;i++){
+            int x = (int)(Math.random()*600+30);
+            int y = (int)(Math.random()*8000+800);
+            adaga.add(new Adaga(x,-y));
+        }
+    }
+
     public void paint(Graphics g){
         Graphics2D graficos = (Graphics2D) g;
         graficos.drawImage(fundo,-100,0,null);
         graficos.drawImage(chao,0,-220,null);
         graficos.drawImage(ninja.getNinja(),ninja.getX(),ninja.getY(),this);
+        for (int i = 0; i < adaga.size();i++){
+            Adaga in = adaga.get(i);
+            in.load();
+            graficos.drawImage(in.getImage(), in.getX(), in.getY(),this);
+        }
         g.dispose();
     }
     @Override
     public void actionPerformed(ActionEvent e){
         ninja.update();
+        for (int i = 0; i < adaga.size();i++){
+            Adaga in = adaga.get(i);
+            if(in.getVisivel()){
+                in.update();
+            }else {
+                adaga.remove(i);
+            }
+        }
         repaint();
     }
     private class TecladoAdapter extends KeyAdapter{
