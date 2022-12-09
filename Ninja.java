@@ -9,7 +9,7 @@ public class Ninja {
 
     public Ninja(){
         this.x = 400;
-        this.y = 390;
+        this.y = 420;
         this.vel = 0;
     }
 

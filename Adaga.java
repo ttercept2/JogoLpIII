@@ -6,7 +6,7 @@ public class Adaga {
     private int x,y;
     private int largura,altura;
     private static final int alturaLimit = 900;
-    private static int vel = 2;
+    private static int vel = 4;
     private boolean isVisivel;
 
     public Adaga(int x, int y){

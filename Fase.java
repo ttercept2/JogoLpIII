@@ -28,18 +28,18 @@ public class Fase extends JPanel implements ActionListener{
         ninja = new Ninja();
         ninja.load();
         addKeyListener(new TecladoAdapter());
-        timer = new Timer(5,this);
+        timer = new Timer(3,this);
         timer.start();
         inicializaAdagas();
     }
 
     public void inicializaAdagas(){
-        int cordenadas [] = new int [40];
+        int cordenadas [] = new int [70];
         adaga = new ArrayList<Adaga>();
 
         for(int i = 0; i<cordenadas.length;i++){
-            int x = (int)(Math.random()*600+30);
-            int y = (int)(Math.random()*8000+800);
+            int x = (int)(Math.random()*710);
+            int y = (int)(Math.random()*8000+600);
             adaga.add(new Adaga(x,-y));
         }
     }
@@ -79,5 +79,4 @@ public class Fase extends JPanel implements ActionListener{
             ninja.keyRelease(e);
         }
     }
-
 }
