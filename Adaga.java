@@ -1,12 +1,12 @@
 import java.awt.Image;
-
+import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 public class Adaga {
     private Image adaga;
     private int x,y;
     private int largura,altura;
     private static final int alturaLimit = 900;
-    private static int vel = 4;
+    private static int vel = 3;
     private boolean isVisivel;
 
     public Adaga(int x, int y){
@@ -18,8 +18,8 @@ public class Adaga {
         ImageIcon referencia = new ImageIcon("imagens\\adaga.png");
         adaga = referencia.getImage();
 
-        this.largura = adaga.getWidth(null);
-        this.altura = adaga.getHeight(null);
+        this.largura = adaga.getWidth(null)-10;
+        this.altura = adaga.getHeight(null)-10;
     }
     public void update(){
         this.y += vel;
@@ -27,6 +27,12 @@ public class Adaga {
             isVisivel = false;
         }
     }
+
+    //Cria um retângulo em volta da adaga para ser utilizado na colisão
+    public Rectangle getBounds(){
+        return new Rectangle(this.x,this.y,this.largura,this.altura);
+    }
+
     public boolean getVisivel(){
         return this.isVisivel;
     }

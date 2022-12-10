@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.awt.Rectangle;
 import javax.swing.*;
 
 public class Fase extends JPanel implements ActionListener{
@@ -17,21 +17,23 @@ public class Fase extends JPanel implements ActionListener{
     private Ninja ninja;
     private Timer timer;
     private List<Adaga> adaga;
-
+    private boolean emJogo;
+    
     public Fase(){
         setFocusable(true);
         setDoubleBuffered(true);
         ImageIcon referencia = new ImageIcon("imagens\\konoha.jpg");
-        fundo = referencia.getImage();
+        this.fundo = referencia.getImage();
         ImageIcon referencia2 = new ImageIcon("imagens\\layer.png");
-        chao = referencia2.getImage();
-        ninja = new Ninja();
-        ninja.load();
+        this.chao = referencia2.getImage();
+        this.ninja = new Ninja();
+        this.ninja.load();
         addKeyListener(new TecladoAdapter());
-        timer = new Timer(3,this);
-        timer.start();
+        this.timer = new Timer(3,this);
+        this.timer.start();
         inicializaAdagas();
-    }
+        this.emJogo = true;
+    }   
 
     public void inicializaAdagas(){
         int cordenadas [] = new int [70];
@@ -46,14 +48,21 @@ public class Fase extends JPanel implements ActionListener{
 
     public void paint(Graphics g){
         Graphics2D graficos = (Graphics2D) g;
-        graficos.drawImage(fundo,-100,0,null);
-        graficos.drawImage(chao,0,-220,null);
-        graficos.drawImage(ninja.getNinja(),ninja.getX(),ninja.getY(),this);
-        for (int i = 0; i < adaga.size();i++){
-            Adaga in = adaga.get(i);
-            in.load();
-            graficos.drawImage(in.getImage(), in.getX(), in.getY(),this);
+        if(emJogo==true){
+            graficos.drawImage(fundo,-100,0,null);
+            graficos.drawImage(chao,0,-220,null);
+            graficos.drawImage(ninja.getNinja(),ninja.getX(),ninja.getY(),this);
+            for (int i = 0; i < adaga.size();i++){
+                Adaga in = adaga.get(i);
+                in.load();
+                graficos.drawImage(in.getImage(), in.getX(), in.getY(),this);
+            }
         }
+        else{
+            ImageIcon fimJogo = new ImageIcon("imagens\\wallpaper.jpg");
+            graficos.drawImage(fimJogo.getImage(), 0,0,null);
+        }
+       
         g.dispose();
     }
     @Override
@@ -67,8 +76,27 @@ public class Fase extends JPanel implements ActionListener{
                 adaga.remove(i);
             }
         }
+        checarColisoes();
         repaint();
     }
+    //Verifica a colisao entre o jogador e a adaga
+    public void checarColisoes(){
+        Rectangle formaNinja = ninja.getBounds();
+        Rectangle formaAdaga;
+
+        for(int i = 0; i < adaga.size();i++){
+            Adaga tempAdaga = adaga.get(i);
+            formaAdaga = tempAdaga.getBounds();
+            if(formaNinja.intersects(formaAdaga)){
+                this.ninja.setVisivel(false);
+                tempAdaga.setVisivel(false);
+                this.emJogo = false;
+            }
+        }
+    }
+
+
+
     private class TecladoAdapter extends KeyAdapter{
         @Override
         public void keyPressed(KeyEvent e){
