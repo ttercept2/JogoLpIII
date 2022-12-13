@@ -4,7 +4,6 @@ import javax.swing.ImageIcon;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
-//import java.awt.event.ActionListener.actionPerformed;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +33,7 @@ public class Fase extends JPanel implements ActionListener{
         inicializaAdagas();
         this.emJogo = true;
     }   
-
+    //coloca as adagas bem acima da tela
     public void inicializaAdagas(){
         int cordenadas [] = new int [70];
         adaga = new ArrayList<Adaga>();
@@ -45,7 +44,7 @@ public class Fase extends JPanel implements ActionListener{
             adaga.add(new Adaga(x,-y));
         }
     }
-
+    //desenha os graficos do jogo
     public void paint(Graphics g){
         Graphics2D graficos = (Graphics2D) g;
         if(emJogo==true){
@@ -65,6 +64,7 @@ public class Fase extends JPanel implements ActionListener{
        
         g.dispose();
     }
+    //atualiza os dados do jogador e de todas as adagas na lista, alem de remover elas quando saem da tela.
     @Override
     public void actionPerformed(ActionEvent e){
         ninja.update();
@@ -77,6 +77,7 @@ public class Fase extends JPanel implements ActionListener{
             }
         }
         checarColisoes();
+        //repintar a tela a cada frame
         repaint();
     }
     //Verifica a colisao entre o jogador e a adaga

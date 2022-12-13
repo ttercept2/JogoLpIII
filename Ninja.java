@@ -8,12 +8,14 @@ public class Ninja {
     private Image ninja;
     private int largura,altura;
     private boolean isVisivel;
+
     public Ninja(){
         this.x = 400;
         this.y = 420;
         this.vel = 0;
         isVisivel = true;
     }
+
     public void setVisivel(boolean isVisivel){
         this.isVisivel=isVisivel;
     }
@@ -26,6 +28,7 @@ public class Ninja {
         altura = ninja.getHeight(null);
         largura = ninja.getWidth(null);
     }
+    //Atualiza a posição do ninja conforme o valor de "vel"
     public void update(){
         x = x + vel;
     }
@@ -34,7 +37,7 @@ public class Ninja {
     public Rectangle getBounds(){
         return new Rectangle(this.x,this.y,this.largura,this.altura);
     }
-
+    //faz com que o X do ninja modifique quando as teclas são apertadas
     public void keyPressed(KeyEvent tecla){
         int codigo = tecla.getKeyCode();
 
@@ -45,6 +48,7 @@ public class Ninja {
             vel = +7;
         }
     }
+    //faz a mudança no valor da velocidade do ninja para 0 quando a tecla deixa de ser apertada
     public void keyRelease(KeyEvent tecla){
         int codigo = tecla.getKeyCode();
 

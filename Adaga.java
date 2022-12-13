@@ -14,6 +14,7 @@ public class Adaga {
         this.y = y;
         isVisivel = true;
     }
+
     public void load(){
         ImageIcon referencia = new ImageIcon("imagens\\adaga.png");
         adaga = referencia.getImage();
@@ -21,6 +22,8 @@ public class Adaga {
         this.largura = adaga.getWidth(null)-10;
         this.altura = adaga.getHeight(null)-10;
     }
+    
+    //Gerencia a atualização da adaga, dando sua velocidade e verificando se a adaga está fora da tela
     public void update(){
         this.y += vel;
         if(this.y>alturaLimit){
